@@ -107,10 +107,10 @@ def detail(request, workflow_id):
     # 自动审批不通过的不需要获取下列信息
     if workflow_detail.status != 'workflow_autoreviewwrong':
         # 获取当前审批和审批流程
-        audit_auth_group, current_audit_auth_group = Audit.review_info(workflow_id, 2)
+        audit_auth_group, current_audit_auth_group = Audit.review_info(workflow_id, WorkflowDict.workflow_type['sqlreview'])
 
         # 是否可审核
-        is_can_review = Audit.can_review(request.user, workflow_id, 2)
+        is_can_review = Audit.can_review(request.user, workflow_id, WorkflowDict.workflow_type['sqlreview'])
         # 是否可执行 TODO 这几个判断方法入参都修改为workflow对象，可减少多次数据库交互
         is_can_execute = can_execute(request.user, workflow_id)
         # 是否可定时执行
